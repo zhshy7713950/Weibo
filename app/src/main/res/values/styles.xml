@@ -1,0 +1,14 @@
+<resources>
+
+    <style name="ThemeLightBase" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="fab_background_tint">@color/color_blue_50</item>
+    </style>
+
+    <style name="ThemeLight" parent="ThemeLightBase">
+
+    </style>
+
+</resources>
