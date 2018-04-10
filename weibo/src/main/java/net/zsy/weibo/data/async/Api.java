@@ -1,11 +1,14 @@
 package net.zsy.weibo.data.async;
 
-import net.zsy.weibo.bean.Movie;
 import net.zsy.weibo.util.WeiboUtil;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
-import retrofit2.http.GET;
-import retrofit2.http.HeaderMap;
+import retrofit2.http.Body;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -14,7 +17,9 @@ import retrofit2.http.Query;
 
 public interface Api {
 
-    @GET(WeiboUtil.SINA_OAUTH2)
-    Observable<String> authorize(@Query("client_id")String clientId, @Query("redirect_uri") String redirectUri);
+    @FormUrlEncoded
+    @POST(WeiboUtil.SINA_OAUTH2_ACCESS_TOKEN)
+    Observable<String> accessToken(@FieldMap Map<String,String> params);
+
 
 }

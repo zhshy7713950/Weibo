@@ -6,6 +6,7 @@ import net.zsy.weibo.ui.WeiboApplication;
 import net.zsy.weibo.util.Logger;
 import net.zsy.weibo.util.WeiboUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.cert.CertificateException;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -36,6 +38,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class AsyncDataManager {
 
     public final static int NETWORK_TIMEOUT_SECS = 10;
+    public final static int NETWORK_CACHE_SIZE = 10;
+    public final static String NETWORK_CACHE_NAME = "cache";
 
     private Context ctx;
     private Api api;
@@ -55,10 +59,18 @@ public class AsyncDataManager {
     }
 
     public AsyncDataManager initialize(){
+        //缓存文件夹
+        File cacheFile = new File(ctx.getExternalCacheDir().toString(),WeiboUtil.APP_CACHE_ROOT + "/" + NETWORK_CACHE_NAME);
+        //缓存大小为10M
+        int cacheSize = NETWORK_CACHE_SIZE * 1024 * 1024;
+        //创建缓存对象
+        final Cache cache = new Cache(cacheFile,cacheSize);
+
         httpBuilder = new OkHttpClient.Builder();
         httpBuilder.connectTimeout(NETWORK_TIMEOUT_SECS, TimeUnit.SECONDS)
                 .readTimeout(NETWORK_TIMEOUT_SECS, TimeUnit.SECONDS)
-                .writeTimeout(NETWORK_TIMEOUT_SECS, TimeUnit.SECONDS);
+                .writeTimeout(NETWORK_TIMEOUT_SECS, TimeUnit.SECONDS)
+                .cache(cache);
 
         if (Logger.isDebug())
             httpBuilder.addInterceptor(new LoggingInterceptor());

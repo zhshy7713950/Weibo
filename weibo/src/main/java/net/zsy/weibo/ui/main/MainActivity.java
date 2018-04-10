@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -14,13 +13,14 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import net.zsy.weibo.R;
 import net.zsy.weibo.ui.base.BaseActivity;
 import net.zsy.weibo.ui.login.OAuth2Web;
+import net.zsy.weibo.util.FragmentUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity <MainContract.Presenter> implements MainContract.View{
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -40,13 +40,18 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initView();
+    }
 
+    private void initView() {
         setSupportActionBar(toolbar);
-
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSwipeBackLayout().setEdgeTrackingEnabled(SwipeBackLayout.EDGE_RIGHT);
+
+        new MainPresenter(this);
+        presenter.initialDisplay();
     }
 
 
@@ -61,5 +66,29 @@ public class MainActivity extends BaseActivity {
             case R.id.fab_top:
                 break;
         }
+    }
+
+    @Override
+    public void setPresenter(MainContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+
+    }
+
+    @Override
+    public void showLoginView() {
+        FragmentUtils.replaceFragment(getFragmentManager(),new OAuth2Web(),R.id.main_frame_container);
+    }
+
+    @Override
+    public void showWeiboView() {
+
+    }
+
+    public void showSnakeBar(String msg){
+
     }
 }

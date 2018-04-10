@@ -6,7 +6,7 @@ package net.zsy.weibo.ui.base;
 
 public interface BasePresenter {
 
-    void attachView();
+    void subscribe();
 
-    void detachView();
+    void unsubscribe();
 }

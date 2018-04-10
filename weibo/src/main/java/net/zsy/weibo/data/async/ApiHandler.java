@@ -1,9 +1,12 @@
 package net.zsy.weibo.data.async;
 
-import net.zsy.weibo.bean.Movie;
+
+import java.util.Map;
 
 import io.reactivex.Observable;
-import retrofit2.http.Query;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.http.FieldMap;
 
 /**
  * Created by Android on 2018/4/9.
@@ -17,9 +20,14 @@ public class ApiHandler implements Api {
         this.api = api;
     }
 
-    @Override
-    public Observable<String> authorize(@Query("client_id") String clientId, @Query("redirect_uri") String redirectUri) {
-        return api.authorize(clientId,redirectUri);
+
+    private <T> Observable<T> handle(Observable<T> observable){
+        return observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
+    @Override
+    public Observable<String> accessToken(@FieldMap Map<String, String> params) {
+        return handle(api.accessToken(params));
+    }
 }

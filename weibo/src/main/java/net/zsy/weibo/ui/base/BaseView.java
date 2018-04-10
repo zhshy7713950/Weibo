@@ -7,4 +7,6 @@ package net.zsy.weibo.ui.base;
 public interface BaseView<T> {
 
     void setPresenter(T presenter);
+
+    void setLoadingIndicator(boolean active);
 }

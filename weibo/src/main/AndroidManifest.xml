@@ -22,7 +22,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.login.OAuth2Web"/>
     </application>
 
 </manifest>

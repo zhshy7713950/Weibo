@@ -1,28 +1,31 @@
 package net.zsy.weibo.ui.base;
 
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import io.reactivex.disposables.CompositeDisposable;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by Android on 2018/4/4.
  */
 
-public class BaseActivity<T extends BasePresenter> extends SwipeBackActivity {
+public class BaseActivity <T extends BasePresenter> extends SwipeBackActivity {
 
+    protected CompositeDisposable mDisposable;
     protected T presenter;
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        if(presenter != null) presenter.attachView();
+        if(presenter != null) presenter.subscribe();
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
-        if(presenter != null) presenter.detachView();
+        if(presenter != null) presenter.unsubscribe();
     }
 
     @Override
@@ -34,4 +37,9 @@ public class BaseActivity<T extends BasePresenter> extends SwipeBackActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mDisposable != null) mDisposable.clear();
+    }
 }

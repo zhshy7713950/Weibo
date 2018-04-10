@@ -25,6 +25,12 @@ android {
     }
 }
 
+repositories{
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
@@ -44,4 +50,6 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
 
     compile "me.imid.swipebacklayout.lib:library:$swipeBackLayoutVersion"
+
+    compile(name: 'openDefault-4.2.7', ext: 'aar')
 }
