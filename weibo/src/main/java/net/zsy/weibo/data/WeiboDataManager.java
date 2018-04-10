@@ -2,6 +2,7 @@ package net.zsy.weibo.data;
 
 import android.content.Context;
 
+import net.zsy.weibo.data.async.ApiHandler;
 import net.zsy.weibo.data.async.AsyncDataManager;
 import net.zsy.weibo.ui.WeiboApplication;
 
@@ -29,5 +30,9 @@ public class WeiboDataManager {
     public WeiboDataManager initialize(AsyncDataManager asyncDataManager){
         this.asyncDataManager = asyncDataManager.initialize();
         return this;
+    }
+
+    public ApiHandler getApiHandler(){
+        return asyncDataManager.getApiHandler();
     }
 }

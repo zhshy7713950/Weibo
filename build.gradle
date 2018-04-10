@@ -34,4 +34,5 @@ ext {
     retrofitVersion = '2.4.0'
     rxandroidVersion = '2.0.2'
     rxjavaVersion = '2.1.12'
+    swipeBackLayoutVersion = '1.1.0'
 }
