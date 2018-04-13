@@ -107,7 +107,7 @@ public class ApiHandler implements Api {
                         .setDuration(Snackbar.LENGTH_INDEFINITE)
                         .setAction1(ctx.getString(R.string.weibo_confirm))
                         .setOnClickListener1(view -> {
-                            WeiboApplication.finishActivity(MainActivity.class);
+                            WeiboApplication.finishAllActivityExceptOne(MainActivity.class);
                             EventBus.getDefault().postSticky(WeiboSettingHelper.getHelper().createWeiboTypeBean());
                         }));
     }
