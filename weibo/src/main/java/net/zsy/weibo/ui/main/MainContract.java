@@ -1,5 +1,6 @@
 package net.zsy.weibo.ui.main;
 
+import net.zsy.weibo.bean.WeiboTypeBean;
 import net.zsy.weibo.ui.base.BasePresenter;
 import net.zsy.weibo.ui.base.BaseView;
 
@@ -13,14 +14,14 @@ public interface MainContract {
 
         void initialDisplay();
 
+        void getUserInfo();
     }
 
     interface View extends BaseView<Presenter>{
 
-        void showLoginView();
+        void showWeiboView(WeiboTypeBean weiboTypeBean);
 
-        void showWeiboView();
-
+        void getUserInfo(String userInfo);
     }
 
 }

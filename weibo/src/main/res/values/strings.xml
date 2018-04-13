@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">Weibo</string>
 
+    <string name="weibo_confirm">确定</string>
+    <string name="weibo_cancel">取消</string>
+
+    <string name="weibo_access_token">您尚未授权或授权已过期，请重新登录授权！</string>
+    <string name="weibo_permission_denied">Token权限异常，请联系开发者！</string>
     <string name="weibosdk_demo_token_to_string_format">Token：%1$s \nRefresh Token：%2$s \nexpires_in：%3$s</string>
     <string name="weibosdk_demo_token_to_string_format_1">Token：%1$s \n有效期：%2$s</string>
+
+    <string name="floatingActionMenu_behavior">net.zsy.weibo.ui.widget.FloatingActionMenuBehavior</string>
 </resources>

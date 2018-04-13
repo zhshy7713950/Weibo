@@ -24,7 +24,7 @@ public class WeiboSettingHelper {
         return WeiboSettingHelperHolder.INSTANCE;
     }
 
-    public static final String ZWEIBO_ACCESS_TOKEN = "zweibo_access_token";
-    public static final String ZWEIBO_TOKEN_CREATE_AT = "zweibo_token_create_at";
-    public static final String ZWEIBO_TOKEN_EXPIRE_IN = "zweibo_token_expire_in";
+    public WeiboTypeBean createWeiboTypeBean(){
+        return new WeiboTypeBean();
+    }
 }

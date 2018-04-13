@@ -11,7 +11,6 @@ import com.sina.weibo.sdk.auth.sso.SsoHandler;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Android on 2018/4/10.
@@ -30,7 +29,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     @Override
     public void accessToken() {
-        mSsoHandler.authorizeWeb(new WbAuthListener() {
+        mSsoHandler.authorize(new WbAuthListener() {
             @Override
             public void onSuccess(Oauth2AccessToken oauth2AccessToken) {
                 Observable.just(oauth2AccessToken)
@@ -46,7 +45,6 @@ public class LoginPresenter implements LoginContract.Presenter {
 
             @Override
             public void onFailure(WbConnectErrorMessage wbConnectErrorMessage) {
-                System.out.print(wbConnectErrorMessage.getErrorMessage());
             }
         });
     }

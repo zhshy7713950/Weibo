@@ -1,9 +1,11 @@
 package net.zsy.weibo.ui.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -11,16 +13,23 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import net.zsy.weibo.R;
+import net.zsy.weibo.bean.SnackbarBean;
+import net.zsy.weibo.bean.WeiboTypeBean;
+import net.zsy.weibo.bean.login.WbLoginHelper;
 import net.zsy.weibo.ui.base.BaseActivity;
 import net.zsy.weibo.ui.login.OAuth2Web;
 import net.zsy.weibo.util.FragmentUtils;
+import net.zsy.weibo.util.UIUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 
-public class MainActivity extends BaseActivity <MainContract.Presenter> implements MainContract.View{
+public class MainActivity extends BaseActivity<MainContract.Presenter> implements MainContract.View {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -34,6 +43,8 @@ public class MainActivity extends BaseActivity <MainContract.Presenter> implemen
     FloatingActionsMenu fabMenu;
     @BindView(R.id.appbar_layout)
     AppBarLayout appbarLayout;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +56,7 @@ public class MainActivity extends BaseActivity <MainContract.Presenter> implemen
 
     private void initView() {
         setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null)
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSwipeBackLayout().setEdgeTrackingEnabled(SwipeBackLayout.EDGE_RIGHT);
@@ -60,8 +71,6 @@ public class MainActivity extends BaseActivity <MainContract.Presenter> implemen
         fabMenu.collapse();
         switch (view.getId()) {
             case R.id.fab_add:
-                Intent intent = new Intent(MainActivity.this, OAuth2Web.class);
-                startActivity(intent);
                 break;
             case R.id.fab_top:
                 break;
@@ -79,16 +88,22 @@ public class MainActivity extends BaseActivity <MainContract.Presenter> implemen
     }
 
     @Override
-    public void showLoginView() {
-        FragmentUtils.replaceFragment(getFragmentManager(),new OAuth2Web(),R.id.main_frame_container);
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void showWeiboView(WeiboTypeBean weiboTypeBean) {
+        if (WbLoginHelper.getHelper().isLogin()) {
+            presenter.getUserInfo();
+        } else {
+            FragmentUtils.replaceFragment(getFragmentManager(), new OAuth2Web(), R.id.main_frame_container, null);
+        }
     }
 
     @Override
-    public void showWeiboView() {
-
+    public void getUserInfo(String userInfo) {
+        showSnackbar(SnackbarBean.create().setMessage(userInfo).setDuration(Snackbar.LENGTH_SHORT));
     }
 
-    public void showSnakeBar(String msg){
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showSnackbar(SnackbarBean snackbarBean) {
+        UIUtils.showSnackBar(coordinatorLayout,snackbarBean);
     }
 }

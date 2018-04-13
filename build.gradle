@@ -3,17 +3,21 @@
 buildscript {
     repositories {
         jcenter()
+        google()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.1.1'
 
-        classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT'
     }
 }
 
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
 
@@ -24,15 +28,18 @@ task clean(type: Delete) {
 ext {
     // Sdk and tools
     minSdkVersion = 16
-    targetSdkVersion = 26
-    compileSdkVersion = 26
-    buildToolsVersion = '26.0.0'
+    targetSdkVersion = 27
+    compileSdkVersion = 27
+    buildToolsVersion = '27.0.2'
 
-    supportLibraryVersion = '26.+'
+    supportLibraryVersion = '27.0.2'
     floatingActionButtonVersion = '1.10.1'
     butterKnifeVersion = '8.8.1'
     retrofitVersion = '2.4.0'
     rxandroidVersion = '2.0.2'
     rxjavaVersion = '2.1.12'
     swipeBackLayoutVersion = '1.1.0'
+    CommonViewsVersion = '1.01'
+    eventbusVersion = '3.1.1'
+    glideVersion = '4.6.1'
 }
